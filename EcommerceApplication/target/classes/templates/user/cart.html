@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shopping Cart - FreshMart</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <h1 class="nav-logo">FreshMart</h1>
+            <div class="nav-links">
+                <a href="/user/dashboard" class="nav-link">Shop</a>
+                <a href="/logout" class="nav-link">Logout</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <h1>Shopping Cart</h1>
+        
+        <div th:if="${success}" class="alert alert-success" th:text="${success}"></div>
+        <div th:if="${error}" class="alert alert-error" th:text="${error}"></div>
+
+        <div th:if="${cart.cartItems.empty}" class="empty-state">
+            <p>Your cart is empty. <a href="/user/dashboard">Continue shopping</a></p>
+        </div>
+
+        <div th:if="${!cart.cartItems.empty}" class="cart-container">
+            <div class="cart-items">
+                <div th:each="item : ${cart.cartItems}" class="cart-item">
+                    <div class="item-image">
+                        <img th:src="${item.product.imageUrl}" 
+                             th:alt="${item.product.name}"
+                             onerror="this.src='https://via.placeholder.com/80x80?text=No+Image'">
+                    </div>
+                    <div class="item-details">
+                        <h4 th:text="${item.product.name}"></h4>
+                        <p th:text="${item.product.category.name}"></p>
+                        <p class="item-price">₹<span th:text="${item.price}"></span> each</p>
+                    </div>
+                    <div class="item-quantity">
+                        <span>Quantity: </span>
+                        <span th:text="${item.quantity}"></span>
+                    </div>
+                    <div class="item-total">
+                        <strong>₹<span th:text="${item.subTotal}"></span></strong>
+                    </div>
+                    <div class="item-actions">
+                        <form th:action="@{/user/cart/remove/{id}(id=${item.product.id})}" 
+                              method="post" style="display: inline;">
+                            <button type="submit" class="btn btn-sm btn-danger">Remove</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <div class="cart-summary">
+                <div class="summary-card">
+                    <h3>Order Summary</h3>
+                    <div class="summary-row">
+                        <span>Total Items:</span>
+                        <span th:text="${cart.cartItems.size()}"></span>
+                    </div>
+                    <div class="summary-row total">
+                        <strong>
+                            <span>Total Amount:</span>
+                            <span>₹<span th:text="${cart.totalAmount}"></span></span>
+                        </strong>
+                    </div>
+                    <a href="/user/checkout" class="btn btn-primary btn-full">Proceed to Checkout</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script th:src="@{/js/main.js}"></script>
+</body>
+</html>

@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shop - FreshMart</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <h1 class="nav-logo">FreshMart</h1>
+            <div class="nav-links">
+                <a href="/user/cart" class="nav-link">Cart</a>
+                <a href="/logout" class="nav-link">Logout</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="shop-header">
+            <h1>Shop Fresh Products</h1>
+            
+            <div class="category-filters">
+                <a href="/user/dashboard" 
+                   th:class="${selectedCategory == null} ? 'category-btn active' : 'category-btn'">
+                   All Products
+                </a>
+                <a th:each="category : ${categories}"
+                   th:href="@{/user/dashboard(category=${category.name})}"
+                   th:class="${selectedCategory == category.name} ? 'category-btn active' : 'category-btn'"
+                   th:text="${category.name}"></a>
+            </div>
+        </div>
+        
+        <div th:if="${success}" class="alert alert-success" th:text="${success}"></div>
+        <div th:if="${error}" class="alert alert-error" th:text="${error}"></div>
+
+        <div th:if="${products.empty}" class="empty-state">
+            <p>No products available at the moment.</p>
+        </div>
+
+        <div th:if="${!products.empty}" class="products-grid">
+            <div th:each="product : ${products}" class="product-card">
+                <div class="product-image">
+                    <img th:src="${product.imageUrl}" 
+                         th:alt="${product.name}"
+                         onerror="this.src='https://via.placeholder.com/200x200?text=No+Image'">
+                </div>
+                <div class="product-info">
+                    <h3 th:text="${product.name}"></h3>
+                    <p class="product-category" th:text="${product.category.name}"></p>
+                    <p class="product-description" th:text="${product.description}"></p>
+                    <div class="product-price">₹<span th:text="${product.price}"></span></div>
+                    <div class="product-stock">
+                        <span th:text="${product.quantity} + ' in stock'"></span>
+                    </div>
+                    
+                    <form th:action="@{/user/add-to-cart/{id}(id=${product.id})}" method="post" class="add-to-cart-form">
+                        <div class="quantity-selector">
+                            <label for="quantity">Quantity:</label>
+                            <input type="number" name="quantity" value="1" min="1" 
+                                   th:max="${product.quantity}" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-full"
+                                th:disabled="${product.quantity == 0}">
+                            <span th:text="${product.quantity > 0} ? 'Add to Cart' : 'Out of Stock'"></span>
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script th:src="@{/js/main.js}"></script>
+</body>
+</html>

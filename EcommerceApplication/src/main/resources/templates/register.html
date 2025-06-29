@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register - FreshMart</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+    <div class="auth-container">
+        <div class="auth-card">
+            <h2>Register</h2>
+            
+            <div th:if="${error}" class="alert alert-error" th:text="${error}"></div>
+            
+            <form th:action="@{/register}" method="post" th:object="${user}" class="auth-form">
+                <div class="form-group">
+                    <label for="username">Username:</label>
+                    <input type="text" id="username" th:field="*{username}" required>
+                    <span th:if="${#fields.hasErrors('username')}" th:errors="*{username}" class="error-text"></span>
+                </div>
+                
+                <div class="form-group">
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" th:field="*{email}" required>
+                    <span th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="error-text"></span>
+                </div>
+                
+                <div class="form-group">
+                    <label for="fullName">Full Name:</label>
+                    <input type="text" id="fullName" th:field="*{fullName}" required>
+                    <span th:if="${#fields.hasErrors('fullName')}" th:errors="*{fullName}" class="error-text"></span>
+                </div>
+                
+                <div class="form-group">
+                    <label for="password">Password:</label>
+                    <input type="password" id="password" th:field="*{password}" required>
+                    <span th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="error-text"></span>
+                </div>
+                
+                <div class="form-group">
+                    <label for="phone">Phone:</label>
+                    <input type="tel" id="phone" th:field="*{phone}">
+                </div>
+                
+                <div class="form-group">
+                    <label for="address">Address:</label>
+                    <textarea id="address" th:field="*{address}" rows="3"></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label for="role">Register as:</label>
+                    <select id="role" name="role" required>
+                        <option value="">Select Role</option>
+                        <option value="USER">Customer</option>
+                        <option value="VENDOR">Vendor</option>
+                    </select>
+                </div>
+                
+                <button type="submit" class="btn btn-primary btn-full">Register</button>
+            </form>
+            
+            <p class="auth-link">
+                Already have an account? <a href="/login">Login here</a>
+            </p>
+        </div>
+    </div>
+</body>
+</html>

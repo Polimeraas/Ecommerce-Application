@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>E-Commerce App</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <h1 class="nav-logo">Mana Polimeras</h1>
+            <div class="nav-links">
+                <a href="/login" class="nav-link">Login</a>
+                <a href="/register" class="nav-link">Register</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="hero-section">
+        <div class="hero-content">
+            <h1>Welcome to Mana Polimeras</h1>
+            <p>Your one-stop shop for fresh vegetables, fruits, and groceries</p>
+            <div class="hero-buttons">
+                <a href="/register" class="btn btn-primary">Get Started</a>
+                <a href="/login" class="btn btn-secondary">Login</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="features-section">
+        <div class="container">
+            <h2>Why Choose FreshMart?</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <h3>Fresh Products</h3>
+                    <p>Quality vegetables, fruits, and groceries delivered fresh</p>
+                </div>
+                <div class="feature-card">
+                    <h3>Easy Shopping</h3>
+                    <p>Browse by category and add items to your cart easily</p>
+                </div>
+                <div class="feature-card">
+                    <h3>Secure Payment</h3>
+                    <p>Safe and secure payment processing</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script th:src="@{/js/main.js}"></script>
+</body>
+</html>
